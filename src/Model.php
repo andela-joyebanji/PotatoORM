@@ -69,6 +69,7 @@ abstract class Model implements ModelInterface
         $model = new static;
         return $model->get($id); 
     }
+
     /**
     * returns a particular record
     * @param $id reps the record id
@@ -186,22 +187,29 @@ abstract class Model implements ModelInterface
         }
     }
 
-    /**
-    * @param row reps record id
-    * @param $connection initialised to null
+   /**
+    * Delete a model from the database. 
+    * @param  int $id 
     * @return boolean
     */
     public static function destroy($id)
     {
-        
+        $model = new static;
+        return $model->delete($id); 
+    }
+
+    /**
+     * Delete model from the database.
+     * 
+     * @param  int $id
+     * @return boolean
+     */
+    public function delete($id)
+    {
         $sql = "DELETE" . " FROM " . self::getTableName()." WHERE id = ". $id;
-        $delete = $connection->prepare($sql);
-        $delete->execute();
-        $count = $delete->rowCount();
-        if ($count < 1) {
-            throw new RecordNotFoundException('Record with id ' . $id . ' does not exist.');
-        }
-        return ($count > 0) ? true : false;
+        $sqlStatment = $this->databaseConnection->prepare($sql);
+        $sqlStatment->execute();
+        return ($sqlStatment->rowCount() > 0) ? true : false;
     }
 
 }
