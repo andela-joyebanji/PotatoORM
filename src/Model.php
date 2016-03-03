@@ -185,6 +185,7 @@ abstract class Model implements ModelInterface
             $this->create();
         }
     }
+
     /**
     * @param row reps record id
     * @param $connection initialised to null
@@ -203,18 +204,4 @@ abstract class Model implements ModelInterface
         return ($count > 0) ? true : false;
     }
 
-    /**
-     * Handle dynamic static method calls into the method.
-     *
-     * @param  string  $method
-     * @param  array  $parameters
-     * @return mixed
-     */
-    public static function __callStatic($method, $parameters)
-    {
-        exit("HERE");
-        $instance = new static;
-
-        return call_user_func_array([$instance, $method], $parameters);
-    }   
 }
