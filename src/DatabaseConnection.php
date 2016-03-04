@@ -23,6 +23,13 @@ class DatabaseConnection
     public $databaseConnection;
 
     /**
+     * The configuration values.
+     * 
+     * @var array
+     */
+    private $config;
+
+    /**
      * The default PDO connection options.
      *
      * @var array
@@ -45,7 +52,7 @@ class DatabaseConnection
         //Read config file
         $this->config = parse_ini_file('config.ini');
         $dsn = $dbConnStringFactory->createDatabaseSourceString($this->config);
-        $this->databaseConnection = $this->createConnection($dsn, $this->options);
+        $this->databaseConnection = $this->createConnection($dsn);
     }
 
     /**
@@ -66,10 +73,9 @@ class DatabaseConnection
      * Create a new PDO connection.
      *
      * @param  string  $dsn
-     * @param  array   $config
      * @return \PDO
      */
-    public function createConnection($dsn, array $config)
+    public function createConnection($dsn)
     {
         $username = $this->config['USERNAME'];
 
@@ -80,7 +86,7 @@ class DatabaseConnection
             $pdo = new PDO($dsn, $username, $password, $this->options);
         } catch (\Exception $e) {
             $pdo = $this->tryAgainIfCausedByLostConnection(
-                $e, $dsn, $username, $password, $options
+                $e, $dsn, $username, $password, $this->options
             );
         }
 
@@ -120,7 +126,7 @@ class DatabaseConnection
      *
      * @throws \Exception
      */
-    protected function tryAgainIfCausedByLostConnection(Exception $e, $dsn, $username, $password, $options)
+    protected function tryAgainIfCausedByLostConnection(\Exception $e, $dsn, $username, $password, $options)
     {
         if ($this->causedByLostConnection($e)) {
             return new PDO($dsn, $username, $password, $options);
@@ -135,7 +141,7 @@ class DatabaseConnection
      * @param  \Exception  $e
      * @return bool
      */
-    protected function causedByLostConnection(Exception $e)
+    protected function causedByLostConnection(\Exception $e)
     {
         $message = $e->getMessage();
 

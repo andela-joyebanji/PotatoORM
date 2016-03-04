@@ -136,7 +136,7 @@ abstract class Model implements ModelInterface
             if($key == 'id') continue;
             $bindColumnName = ':' . $columnName;
             $sqlUpdate .= "$columnName = $bindColumnName,";
-            $bindNameParameters[$bindColumnName] = $columnValue
+            $bindNameParameters[$bindColumnName] = $columnValue;
         }
         //Remove the last comma in sql command then join it to the other query part.
         $sqlUpdate = substr($sqlUpdate, 0, -1)." WHERE id = :id";
