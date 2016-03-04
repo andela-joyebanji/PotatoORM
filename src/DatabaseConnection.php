@@ -4,9 +4,10 @@ namespace Pyjac\ORM;
 
 use PDO;
 use Pyjac\ORM\DatabaseConnectionStringFactoryInterface;
+use Pyjac\ORM\DatabaseConnectionInterface;
 use Pyjac\ORM\DatabaseConnectionStringFactory;
 
-class DatabaseConnection
+class DatabaseConnection implements DatabaseConnectionInterface
 {
     /**
      * The instance of this class.

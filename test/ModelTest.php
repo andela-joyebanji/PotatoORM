@@ -14,18 +14,18 @@ class ModelTest extends PHPUnit_Framework_TestCase
     {
         $this->model->expects($this->any())
              ->method('getTableName')
-             ->will($this->returnValue(strtolower(get_class($stub).'s')));
+             ->will($this->returnValue(strtolower(get_class($this->model).'s')));
 
-        $this->assertEquals($stub->getTableName(), strtolower(get_class($stub).'s'));
+        $this->assertEquals($this->model->getTableName(), strtolower(get_class($this->model).'s'));
     }
 
-    public function testGetTableNameReturnsCorrectTableName()
+    public function testGetTableNameReturnsCorrectTableName2()
     {
         $this->model->expects($this->any())
              ->method('getTableName')
-             ->will($this->returnValue(strtolower(get_class($stub).'s')));
+             ->will($this->returnValue(strtolower(get_class($this->model).'s')));
 
-        $this->assertEquals($stub->getTableName(), strtolower(get_class($stub).'s'));
+        $this->assertEquals($this->model->getTableName(), strtolower(get_class($this->model).'s'));
     }
 
 }
