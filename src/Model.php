@@ -14,30 +14,37 @@ abstract class Model implements ModelInterface
     */
     protected  $databaseConnection;
 
+    /**
+     * Create a model instance.
+     * 
+     */
      public function __construct()
     {
         $this->databaseConnection = DatabaseConnection::getInstance()->databaseConnection;
-        //$databaseConnection->databaseConnection->connect();
+       
     }
     /**
-    * @param string $key rep column name
-    * @param string $val rep column value
-    * sets into $propertie the $key => $value pairs
+     * Sets into $properties the $key => $value pairs
+     * 
+    * @param string $key 
+    * @param string $val 
+    *
     */
     public  function __set($key, $val)
     {
         $this->properties[$key] = $val;
     }
     /**
-    * @param string $key reps the column name
-    * @return $key and $value
+    * @param string $key
+    * 
+    * @return array
     */
     public function __get($key)
     {
         return $this->properties[$key];
     }
     /**
-     * Get all the model properties
+     * Get all the model properties.
      *
      * @return array
      */
@@ -46,11 +53,9 @@ abstract class Model implements ModelInterface
          return $this->properties;
      }
     /**
-    * Gets the name of the child class only
-    * without the namespace
-    * @var $className
-    * @var $table
-    * @return $table
+    * Gets the name of the child class with a 's'.
+    *
+    * @return string
     */
     public function getTableName()
     {
@@ -59,9 +64,10 @@ abstract class Model implements ModelInterface
         return $table;
     }
     /**
-    * returns a particular record
-    * @param $id reps the record id
-    * @param $connection initialised to null
+    * Find the particular model with the passed id.
+    * 
+    * @param int $id
+    * 
     * @return object
     */
     public static function find($id)
@@ -71,9 +77,10 @@ abstract class Model implements ModelInterface
     }
 
     /**
-    * returns a particular record
-    * @param $id reps the record id
-    * @param $connection initialised to null
+    * Get the particular model with the passed id.
+    * 
+    * @param int $id
+    * 
     * @return object
     */
     public function get($id)
@@ -87,13 +94,23 @@ abstract class Model implements ModelInterface
         }
         return $sqlStatement->fetch();
     }
-    
+
+    /**
+    * Get all the models from the database.
+    * 
+    * @return array
+    */
     public static function getAll()
     {
         $model = new static;
         return $model->all();
     }
 
+    /**
+    * Returns all the models from the database.
+    * 
+    * @return array
+    */
     public function all()
     {
         $sql = "SELECT * FROM {$this->getTableName()}";
@@ -146,7 +163,7 @@ abstract class Model implements ModelInterface
             $bindColumnName = ':' . $columnName;
             $columnNames .= $columnName.",";
             $columnValues .= $bindColumnName.",";
-            $bindNameParameters[$bindColumnName] = $columnValue
+            $bindNameParameters[$bindColumnName] = $columnValue;
         }
         // Remove ending comma and whitespace.
         $columnNames = substr($columnNames, 0, -1);
