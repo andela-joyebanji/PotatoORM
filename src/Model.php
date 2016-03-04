@@ -147,7 +147,7 @@ abstract class Model implements ModelInterface
         //Remove the last comma in sql command then join it to the other query part.
         $sqlUpdate = substr($sqlUpdate, 0, -1)." WHERE id = :id";
         $sqlStatement = $this->databaseConnection->prepare($sqlUpdate);
-        $sqlStatement->bindValue(":id", $this->properties['id']);
+        $bindNameParameters[":id"] = $this->properties['id'];
         $sqlStatement->execute($bindNameParameters);
         return $sqlStatement->rowCount();
     }
@@ -188,7 +188,7 @@ abstract class Model implements ModelInterface
      */
     public function save()
     {
-        return $this->id ? $this->update() : $this->create();
+        return isset($this->properties['id']) ? $this->update() : $this->create();
     }
 
    /**
