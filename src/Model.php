@@ -103,88 +103,69 @@ abstract class Model implements ModelInterface
         return $row->fetchAll($this->databaseConnection::FETCH_CLASS);
 
     }
-    /** update table with instance properties
-    *
+    /** 
+     * Update the model in the database.
+     * 
+     * @return int
     */
     private function update()
     {
-        $connection = $this->getConnection();
+       
         $columnNames = "";
         $columnValues = "";
-        $count = 0;
-        $update = "UPDATE " . $this->getTableName() . " SET " ;
-        foreach ($this->properties as $key => $val) {
-            $count++;
-            if(($key == 'id')) continue;
-            $update .= "$key = '$val'";
-            if ($count < count($this->properties) )
-            {
-                $update .=",";
-            }
+        $bindNameParameters = [];
+        $sqlUpdate = "UPDATE " . $this->getTableName() . " SET " ;
+        foreach ($this->properties as $columnName => $columnValue) {
+            if($key == 'id') continue;
+            $bindColumnName = ':' . $columnName;
+            $sqlUpdate .= "$columnName = $bindColumnName,";
+            $bindNameParameters[$bindColumnName] = $columnValue
         }
-        $update .= " WHERE id = " . $this->properties['id'];
-        $stmt = $connection->prepare($update);
-            foreach ($this->properties as $key => $val) {
-                if($key == 'id') continue;
-            }
-        $stmt->execute();
-        return $stmt->rowCount();
+        //Remove the last comma in sql command then join it to the other query part.
+        $sqlUpdate = substr($sqlUpdate, 0, -1)." WHERE id = :id";
+        $sqlStatement = $this->databaseConnection->prepare($sqlUpdate);
+        $sqlStatement->bindValue(":id", $this->properties['id']);
+        $sqlStatement->execute($bindNameParameters);
+        return $sqlStatement->rowCount();
     }
+
     /**
-    * insert instance data into the table
+    * Insert the model values into the database.
+    *
+    * @return int
     */
     private function create()
     {
-        $connection = $this->getConnection();
+        
         $columnNames = "";
         $columnValues = "";
-        $count = 0;
-        $create = "INSERT" . " INTO " . $this->getTableName()." (";
-            foreach ($this->properties as $key => $val) {
-                $columnNames .= $key;
-                $columnValues .= ':' . $key;
-                $count++;
-                if ($count < count($this->properties))
-                {
-                    $columnNames .= ', ';
-                    $columnValues .= ', ';
-                }
-            }
-        $create .= $columnNames.') VALUES (' .$columnValues.')';
-        $stmt = $connection->prepare($create);
-            foreach ($this->properties as $key => $val) {
-                $stmt->bindValue(':'.$key, $val);
-            }
-            try {
-                // if prop returned and props from db differ throw exception
-                $stmt->execute();
-            } catch(PDOException $e){
-                return $e->getExceptionMessage();
-            }
-        return $stmt->rowCount();
-    }
-    /**
-    * get db connection
-    */
-    public function getConnection($connection = null)
-    {
-        if(is_null($connection))
-        {
-            return new Connection();
+        $bindNameParameters = [];
+        $sqlCreate = "INSERT" . " INTO " . $this->getTableName()." (";
+        foreach ($this->properties as $columnName => $columnValue) {
+
+            $bindColumnName = ':' . $columnName;
+            $columnNames .= $columnName.",";
+            $columnValues .= $bindColumnName.",";
+            $bindNameParameters[$bindColumnName] = $columnValue
         }
+        // Remove ending comma and whitespace.
+        $columnNames = substr($columnNames, 0, -1);
+        $columnValues = substr($columnValues, 0, -1);
+
+        $sqlCreate .= $columnNames.') VALUES (' .$columnValues.')';
+        $sqlStatement = $this->databaseConnection->prepare($sqlCreate);
+        $sqlStatement->execute($bindNameParameters);
+        return $sqlStatement->rowCount();
     }
+    
     /**
-    * checks if the id exists
-    * update if exist
-    * create if not exist
-    */
+     * Save the model data to the database.
+     * 
+     * @return boolean
+     */
     public function save()
     {
-        if ($this->id) {
-            $this->update();
-        } else {
-            $this->create();
-        }
+        return $this->id ? $this->update() : $this->create();
     }
 
    /**
