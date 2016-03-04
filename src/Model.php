@@ -15,6 +15,12 @@ abstract class Model implements ModelInterface
     protected  $databaseConnection;
 
     /**
+     *  The id of the model.
+     *  
+     * @property string $id
+    */
+     
+    /**
      * Create a model instance.
      * 
      */
@@ -128,12 +134,10 @@ abstract class Model implements ModelInterface
     private function update()
     {
        
-        $columnNames = "";
-        $columnValues = "";
         $bindNameParameters = [];
         $sqlUpdate = "UPDATE " . $this->getTableName() . " SET " ;
         foreach ($this->properties as $columnName => $columnValue) {
-            if($key == 'id') continue;
+            if($columnName == 'id') continue;
             $bindColumnName = ':' . $columnName;
             $sqlUpdate .= "$columnName = $bindColumnName,";
             $bindNameParameters[$bindColumnName] = $columnValue;
