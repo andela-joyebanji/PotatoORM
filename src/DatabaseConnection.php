@@ -47,7 +47,7 @@ class DatabaseConnection
      * 
      * @param DatabaseConnectionStringFactoryInterface $dbConnStringFactory
      */
-    private function __construct(DatabaseConnectionStringFactoryInterface $dbConnStringFactory)
+    public function __construct(DatabaseConnectionStringFactoryInterface $dbConnStringFactory)
     {
         //Read config file
         $this->config = parse_ini_file('config.ini');

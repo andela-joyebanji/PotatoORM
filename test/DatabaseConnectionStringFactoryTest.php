@@ -1,6 +1,7 @@
 <?php 
 
 use Pyjac\ORM\DatabaseConnectionStringFactory;
+use Pyjac\ORM\Exception\DatabaseDriverNotSupportedException;
 
 class DatabaseConnectionStringFactoryTest extends PHPUnit_Framework_TestCase
 {
@@ -9,7 +10,7 @@ class DatabaseConnectionStringFactoryTest extends PHPUnit_Framework_TestCase
      *
      * @var Pyjac\ORM\DatabaseConnectionStringFactory
      */
-    protected $openSourceEvangelistFactory;
+    protected $databaseConnectionStringFactory;
 
     /**
      * Configuration array.
@@ -19,13 +20,37 @@ class DatabaseConnectionStringFactoryTest extends PHPUnit_Framework_TestCase
 
     protected function setUp()
     {   
-        $this->databaseConnectionStringFactoryTest = new DatabaseConnectionStringFactory();
+        $this->config = ['DBNAME' => 'Pyjac', 'DRIVER' => '', 'PASSWORD' => 'secret', 'HOSTNAME' => 'localhost', 'USERNAME' => 'pyjac'];
+        $this->databaseConnectionStringFactory = new DatabaseConnectionStringFactory();
     }
 
     public function testCreateDatabaseSourceStringReturnsCorrectPostgresDatabaseSourceString()
     {
-        $config = ['DBNAME' => 'Pyjac', 'DRIVER' => 'postgres', 'PASSWORD' => 'secret', 'HOSTNAME' => 'localhost', 'USERNAME' => 'pyjac'];
-        $dsn = $this->databaseConnectionStringFactoryTest->createDatabaseSourceString($config);
+        $this->config['DRIVER']= 'postgres';
+        $dsn = $this->databaseConnectionStringFactory->createDatabaseSourceString($this->config);
         $this->assertEquals("pgsql:host=localhost;dbname=Pyjac", $dsn);
+    }
+
+    public function testCreateDatabaseSourceStringReturnsCorrectMYSqlDatabaseSourceString()
+    {
+        $this->config['DRIVER']= 'mysql';
+        $dsn = $this->databaseConnectionStringFactory->createDatabaseSourceString($this->config);
+        $this->assertEquals("mysql:host=localhost;dbname=Pyjac", $dsn);
+    }
+
+    public function testCreateDatabaseSourceStringReturnsCorrectSQLiteDatabaseSourceString()
+    {
+        $this->config['DRIVER']= 'sqlite';
+        $dsn = $this->databaseConnectionStringFactory->createDatabaseSourceString($this->config);
+        $this->assertEquals("sqlite::memory:", $dsn);
+    }
+
+     /**
+     * @expectedException Pyjac\ORM\Exception\DatabaseDriverNotSupportedException
+     */
+    public function testCreateDatabaseSourceStringThrowsDatabaseDriverNotSupportedExceptionWhenUnknownDriverIsPassed()
+    {
+        $this->config['DRIVER']= 'pyjac';
+        $dsn = $this->databaseConnectionStringFactory->createDatabaseSourceString($this->config);
     }
 }

@@ -2,10 +2,10 @@
 
 namespace Pyjac\ORM\Exception;
 
-class DatabaseDriverNotSupportedException extends Exception 
+class DatabaseDriverNotSupportedException extends \Exception 
 {
 
-    function __construct()
+    public function __construct()
     {
         parent::__construct("Database driver not supported.");
     }

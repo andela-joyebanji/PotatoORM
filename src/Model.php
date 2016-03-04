@@ -2,6 +2,8 @@
 
 namespace Pyjac\ORM;
 
+use PDO;
+
 abstract class Model implements ModelInterface
 {
 
@@ -93,7 +95,7 @@ abstract class Model implements ModelInterface
     {
         $sql = "SELECT * FROM {$this->getTableName()} WHERE id={$id}";
         $sqlStatement = $this->databaseConnection->prepare($sql);
-        $sqlStatement->setFetchMode($this->databaseConnection::FETCH_CLASS, get_called_class());
+        $sqlStatement->setFetchMode(PDO::FETCH_CLASS, get_called_class());
         $sqlStatement->execute();
         if($sqlStatement->rowCount() < 1){
             throw new ModelNotFoundException($id);
@@ -123,7 +125,7 @@ abstract class Model implements ModelInterface
         $row = $this->databaseConnection->prepare($sql);
         $row->execute();
        
-        return $row->fetchAll($this->databaseConnection::FETCH_CLASS);
+        return $row->fetchAll(PDO::FETCH_CLASS);
 
     }
     /** 
