@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Pyjac\ORM\Exception;
 
 class ModelNotFoundException extends \Exception

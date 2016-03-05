@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Pyjac\ORM\Exception;
 
 class DatabaseDriverNotSupportedException extends \Exception

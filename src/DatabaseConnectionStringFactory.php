@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Pyjac\ORM;
 
 use Pyjac\ORM\Exception\DatabaseDriverNotSupportedException;
