@@ -3,29 +3,26 @@
 namespace Pyjac\ORM;
 
 use PDO;
-use Pyjac\ORM\DatabaseConnectionStringFactoryInterface;
-use Pyjac\ORM\DatabaseConnectionInterface;
-use Pyjac\ORM\DatabaseConnectionStringFactory;
 
 class DatabaseConnection implements DatabaseConnectionInterface
 {
     /**
      * The instance of this class.
-     * 
+     *
      * @var Pyjac\ORM\DatabaseConnection.
      */
     private static $instance;
 
     /**
      * The PDO database connection in use.
-     * 
+     *
      * @var \PDO
      */
     public $databaseConnection;
 
     /**
      * The configuration values.
-     * 
+     *
      * @var array
      */
     private $config;
@@ -36,16 +33,16 @@ class DatabaseConnection implements DatabaseConnectionInterface
      * @var array
      */
     protected $options = [
-        PDO::ATTR_CASE => PDO::CASE_NATURAL,
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-        PDO::ATTR_ORACLE_NULLS => PDO::NULL_NATURAL,
+        PDO::ATTR_CASE              => PDO::CASE_NATURAL,
+        PDO::ATTR_ERRMODE           => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_ORACLE_NULLS      => PDO::NULL_NATURAL,
         PDO::ATTR_STRINGIFY_FETCHES => false,
-        PDO::ATTR_EMULATE_PREPARES => false,
+        PDO::ATTR_EMULATE_PREPARES  => false,
     ];
 
     /**
      * Create a new Database Connection.
-     * 
+     *
      * @param DatabaseConnectionStringFactoryInterface $dbConnStringFactory
      */
     public function __construct(DatabaseConnectionStringFactoryInterface $dbConnStringFactory)
@@ -58,22 +55,23 @@ class DatabaseConnection implements DatabaseConnectionInterface
 
     /**
      * Get the instance of the class.
-     *     
+     *
      * @return Pyjac\ORM\DatabaseConnection
      */
     public static function getInstance()
     {
         if (self::$instance === null) {
-            self::$instance = new self(new DatabaseConnectionStringFactory);
+            self::$instance = new self(new DatabaseConnectionStringFactory());
         }
+
         return self::$instance;
     }
-    
 
     /**
      * Create a new PDO connection.
      *
-     * @param  string  $dsn
+     * @param string $dsn
+     *
      * @return \PDO
      */
     public function createConnection($dsn)
@@ -81,7 +79,6 @@ class DatabaseConnection implements DatabaseConnectionInterface
         $username = $this->config['USERNAME'];
 
         $password = $this->config['PASSWORD'];
-        
 
         try {
             $pdo = new PDO($dsn, $username, $password, $this->options);
@@ -107,7 +104,8 @@ class DatabaseConnection implements DatabaseConnectionInterface
     /**
      * Set the default PDO connection options.
      *
-     * @param  array  $options
+     * @param array $options
+     *
      * @return void
      */
     public function setDefaultOptions(array $options)
@@ -118,14 +116,15 @@ class DatabaseConnection implements DatabaseConnectionInterface
     /**
      * Handle a exception that occurred during connect execution.
      *
-     * @param  \Exception  $e
-     * @param  string  $dsn
-     * @param  string  $username
-     * @param  string  $password
-     * @param  array   $options
-     * @return \PDO
+     * @param \Exception $e
+     * @param string     $dsn
+     * @param string     $username
+     * @param string     $password
+     * @param array      $options
      *
      * @throws \Exception
+     *
+     * @return \PDO
      */
     protected function tryAgainIfCausedByLostConnection(\Exception $e, $dsn, $username, $password, $options)
     {
@@ -139,7 +138,8 @@ class DatabaseConnection implements DatabaseConnectionInterface
     /**
      * Determine if the given exception was caused by a lost connection.
      *
-     * @param  \Exception  $e
+     * @param \Exception $e
+     *
      * @return bool
      */
     protected function causedByLostConnection(\Exception $e)

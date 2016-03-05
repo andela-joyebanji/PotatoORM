@@ -2,14 +2,16 @@
 
 namespace Pyjac\ORM;
 
-interface DatabaseConnectionStringFactoryInterface 
+interface DatabaseConnectionStringFactoryInterface
 {
     /**
-     * Create a connection string 
-     * 
-     * @param  array $config
+     * Create a connection string.
+     *
+     * @param array $config
+     *
      * @throws Pyjac\PotatoORM\Exception\DatabaseDriverNotSupportedException
-     * @return string 
+     *
+     * @return string
      */
     public function createDatabaseSourceString($config);
 }
