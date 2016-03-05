@@ -2,7 +2,7 @@
 
 namespace Pyjac\ORM\Exception;
 
-class ModelNotFoundException extends Exception 
+class ModelNotFoundException extends \Exception 
 {
 
     function __construct($id)

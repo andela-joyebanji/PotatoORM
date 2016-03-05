@@ -6,7 +6,7 @@ use Pyjac\ORM\DatabaseConnection;
 class DatabaseConnectionTest extends PHPUnit_Framework_TestCase
 {
 	/**
-	 * instance of DatabaseConnection used in test.
+	 * Instance of DatabaseConnection used in test.
 	 */
 	protected $databaseConnection;
 

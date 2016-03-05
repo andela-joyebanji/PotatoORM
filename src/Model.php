@@ -3,6 +3,7 @@
 namespace Pyjac\ORM;
 
 use PDO;
+use Pyjac\ORM\Exception\ModelNotFoundException;
 
 abstract class Model implements ModelInterface
 {
@@ -26,10 +27,12 @@ abstract class Model implements ModelInterface
      * Create a model instance.
      * 
      */
-     public function __construct()
+     public function __construct(DatabaseConnectionInterface $databaseConnection = null)
     {
-        $this->databaseConnection = DatabaseConnection::getInstance()->databaseConnection;
-       
+        if($databaseConnection == null){
+            $this->databaseConnection = DatabaseConnection::getInstance()->databaseConnection;    
+        }
+        $this->databaseConnection = $databaseConnection;
     }
     /**
      * Sets into $properties the $key => $value pairs
@@ -59,6 +62,15 @@ abstract class Model implements ModelInterface
      public function getProperties()
      {
          return $this->properties;
+     }
+
+     /**
+     * Set model properties.
+     *
+     */
+     public function setProperties(array $properties)
+     {
+         $this->properties = $properties;
      }
     /**
     * Gets the name of the child class with a 's'.
@@ -122,10 +134,10 @@ abstract class Model implements ModelInterface
     public function all()
     {
         $sql = "SELECT * FROM {$this->getTableName()}";
-        $row = $this->databaseConnection->prepare($sql);
-        $row->execute();
+        $sqlStatement = $this->databaseConnection->prepare($sql);
+        $sqlStatement->execute();
        
-        return $row->fetchAll(PDO::FETCH_CLASS);
+        return $sqlStatement->fetchAll(PDO::FETCH_CLASS);
 
     }
     /** 
@@ -133,7 +145,7 @@ abstract class Model implements ModelInterface
      * 
      * @return int
     */
-    private function update()
+    public function update()
     {
        
         $bindNameParameters = [];
@@ -157,7 +169,7 @@ abstract class Model implements ModelInterface
     *
     * @return int
     */
-    private function create()
+    public function create()
     {
         
         $columnNames = "";
