@@ -1,12 +1,12 @@
-<?php 
+<?php
 
 namespace Pyjac\ORM;
 
-interface DatabaseConnectionInterface 
+interface DatabaseConnectionInterface
 {
-	/**
+    /**
      * Get the instance of the class.
-     *     
+     *
      * @return Pyjac\ORM\DatabaseConnection
      */
     public static function getInstance();
@@ -14,7 +14,8 @@ interface DatabaseConnectionInterface
     /**
      * Create a new PDO connection.
      *
-     * @param  string  $dsn
+     * @param string $dsn
+     *
      * @return \PDO
      */
     public function createConnection($dsn);
