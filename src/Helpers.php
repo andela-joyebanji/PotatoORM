@@ -1,15 +1,16 @@
-<?php 
+<?php
+
 
 namespace Pyjac\ORM;
 
-class Helpers 
+class Helpers
 {
-
     /**
      * Determine if a given string contains a given substring.
      *
-     * @param  string  $haystack
-     * @param  string|array  $needles
+     * @param string       $haystack
+     * @param string|array $needles
+     *
      * @return bool
      */
     public static function contains($haystack, $needles)
