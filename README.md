@@ -26,30 +26,26 @@ For example:
 ```php
 
 <?php
-
 use Pyjac\ORM\Model;
 
 class User extends Model {
 
 }
-
 ```  
         
 **To create a new instance of the User class, you do:**
 
 ```php
-        $user = new User();
+$user = new User();
 ```
 
 **To create a new record in the database, you do:**
 
 ```php
-
 $user = new User();
 $user->name = "Pyjac";
 $user->age = 200;
 $user->save();
-
 ```
 
 `(Note) The above assumes you've created a table named users with columns id, name and age in the database.`
@@ -58,35 +54,28 @@ $user->save();
 **To fetch all the Model of the class from the database, you do:**
 
 ```php
-
-   $users = User::getAll();
-   var_dump($users);
-   
+$users = User::getAll();
+var_dump($users);
 ```
 
 **To find a Model with a specific id in the database, you do:**
 
 ```php
-
- $user = User::find(3);
-
+$user = User::find(3);
 ```
 
 **To delete a Model from the database, you do:**
 
 ```php
-
-   $user = User::destroy(1);
-   
+$user = User::destroy(1);
 ```
 
 **Updating an existing Model in the database:**
-```php
 
+```php
 $user = User::find(1);
 $user->name = "Nandaa";
-$user->save();  
-
+$user->save();
 ```
 `NB: The save() method checks first to see if the id exists. if yes, it calls the upadte method else calls the create method` 
 
