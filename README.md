@@ -1,12 +1,5 @@
 
-[![Build Status](https://travis-ci.org/andela-joyebanji/PotatoORM.svg?branch=develop)](https://travis-ci.org/andela-joyebanji/PotatoORM)
-
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/andela-joyebanji/PotatoORM/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/andela-joyebanji/PotatoORM/?branch=develop)
-
-[![StyleCI](https://styleci.io/repos/53060668/shield)](https://styleci.io/repos/53060668)
-
-[![Coverage Status](https://coveralls.io/repos/github/andela-joyebanji/PotatoORM/badge.svg?branch=develop)](https://coveralls.io/github/andela-joyebanji/PotatoORM?branch=develop)
-
+[![Build Status](https://travis-ci.org/andela-joyebanji/PotatoORM.svg?branch=develop)](https://travis-ci.org/andela-joyebanji/PotatoORM) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/andela-joyebanji/PotatoORM/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/andela-joyebanji/PotatoORM/?branch=develop) [![StyleCI](https://styleci.io/repos/53060668/shield)](https://styleci.io/repos/53060668) [![Coverage Status](https://coveralls.io/repos/github/andela-joyebanji/PotatoORM/badge.svg?branch=develop)](https://coveralls.io/github/andela-joyebanji/PotatoORM?branch=develop)
 
 # Potato ORM
 Potato ORM is a very simple agnostic ORM that can perform the basic crud database operations.
