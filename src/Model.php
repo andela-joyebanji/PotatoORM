@@ -2,9 +2,9 @@
 
 namespace Pyjac\ORM;
 
+use Doctrine\Common\Inflector\Inflector;
 use PDO;
 use Pyjac\ORM\Exception\ModelNotFoundException;
-use Doctrine\Common\Inflector\Inflector;
 
 abstract class Model implements ModelInterface
 {
@@ -81,6 +81,7 @@ abstract class Model implements ModelInterface
     public function getTableName()
     {
         $className = explode('\\', get_called_class());
+
         return Inflector::pluralize(strtolower(end($className)));
     }
 
