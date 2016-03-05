@@ -138,9 +138,6 @@ class ModelTest extends PHPUnit_Framework_TestCase
     }
 
     public function testMagicMethodsReturnCorrectResult() {
-	    /*$this->model->setReturnValue('__get', 'Pyjac', array('name'));
-	    $this->model->setReturnValue('__get', '10', array('id'));
-	    $this->model->setReturnValue('__get', '60', array('age'));*/
 	    $this->model->id = '10';
 	    $this->model->name = 'Pyjac';
 	    $this->model->age = '60';
