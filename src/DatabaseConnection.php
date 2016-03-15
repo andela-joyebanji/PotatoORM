@@ -47,11 +47,10 @@ class DatabaseConnection implements DatabaseConnectionInterface
      */
     public function __construct(DatabaseConnectionStringFactoryInterface $dbConnStringFactory)
     {
-        
         $this->loadEnv(); // load the environment variables
-        $neededValues = array('DRIVER', 'HOSTNAME','USERNAME','PASSWORD','DBNAME','PORT'); 
+        $neededValues = ['DRIVER', 'HOSTNAME', 'USERNAME', 'PASSWORD', 'DBNAME', 'PORT'];
         //Extract needed environment variables from the $_ENV global array
-        $this->config = array_intersect_key($_ENV, array_flip($neededValues)); 
+        $this->config = array_intersect_key($_ENV, array_flip($neededValues));
         $dsn = $dbConnStringFactory->createDatabaseSourceString($this->config);
         $this->databaseConnection = $this->createConnection($dsn);
     }
@@ -163,14 +162,14 @@ class DatabaseConnection implements DatabaseConnectionInterface
 
      /**
       * Load needed configuration values from the .env file using Dotenv.
-      * 
+      *
       * @return void
       */
      public function loadEnv()
      {
-        if (!getenv('APP_ENV')) {
-            $dotenv = new \Dotenv\Dotenv(__DIR__.'/../../../');
-            $dotenv->overload();
+         if (!getenv('APP_ENV')) {
+             $dotenv = new \Dotenv\Dotenv(__DIR__.'/../../../');
+             $dotenv->overload();
          }
      }
 }
