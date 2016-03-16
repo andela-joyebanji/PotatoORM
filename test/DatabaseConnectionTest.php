@@ -1,7 +1,6 @@
 <?php
 
 use \Mockery as m;
-use org\bovigo\vfs\vfsStream;
 use Pyjac\ORM\DatabaseConnection;
 
 class DatabaseConnectionTest extends PHPUnit_Framework_TestCase
@@ -16,10 +15,10 @@ class DatabaseConnectionTest extends PHPUnit_Framework_TestCase
      */
     protected $databaseConnectionStringFactory;
 
-     /**
-     * root directory
+    /**
+     * root directory.
      *
-     * @type  vfsStreamDirectory
+     * @var vfsStreamDirectory
      */
     protected $root;
 
@@ -93,8 +92,6 @@ class DatabaseConnectionTest extends PHPUnit_Framework_TestCase
         $e = new \Exception('PHP Rocks !!!');
         $result = $this->invokeMethod($this->databaseConnection, 'tryAgainIfCausedByLostConnection', [$e, 'sqlite::memory:', '', '', []]);
     }
-
-
 
     /**
      * Reference: https://jtreminio.com/2013/03/unit-testing-tutorial-part-3-testing-protected-private-methods-coverage-reports-and-crap/
