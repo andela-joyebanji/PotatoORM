@@ -47,8 +47,10 @@ class DatabaseConnection implements DatabaseConnectionInterface
      */
     public function __construct(DatabaseConnectionStringFactoryInterface $dbConnStringFactory)
     {
-        //Read config file
-        $this->config = parse_ini_file('config.ini');
+        $this->loadEnv(); // load the environment variables
+        $neededValues = ['DRIVER', 'HOSTNAME', 'USERNAME', 'PASSWORD', 'DBNAME', 'PORT'];
+        //Extract needed environment variables from the $_ENV global array
+        $this->config = array_intersect_key($_SERVER, array_flip($neededValues));
         $dsn = $dbConnStringFactory->createDatabaseSourceString($this->config);
         $this->databaseConnection = $this->createConnection($dsn);
     }
@@ -157,4 +159,17 @@ class DatabaseConnection implements DatabaseConnectionInterface
             'Deadlock found when trying to get lock',
         ]);
     }
+
+     /**
+      * Load needed configuration values from the .env file using Dotenv.
+      *
+      * @return void
+      */
+     public function loadEnv()
+     {
+         if (!getenv('APP_ENV')) {
+             $dotenv = new \Dotenv\Dotenv(__DIR__.'/../../../');
+             $dotenv->overload();
+         }
+     }
 }
