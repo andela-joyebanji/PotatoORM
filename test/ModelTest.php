@@ -148,4 +148,10 @@ class ModelTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($this->model->id, '10');
         $this->assertEquals($this->model->age, '60');
     }
+
+    public function testCreate()
+    {
+        $model = $this->getMockForAbstractClass('Pyjac\ORM\Model');
+        $this->assertInstanceOf(\Pyjac\ORM\Model::class, $model);
+    }
 }
