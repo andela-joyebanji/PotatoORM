@@ -17,6 +17,15 @@ Supported database engines
     1. MySQL 
     2. Postgres 
     3. SQLite
+    
+You also need set your environment variables to define your database parameters or create a _.env_ file in your project.
+
+    DRIVER   = sqlite
+    HOSTNAME = 127.0.0.1
+    USERNAME = pyjac
+    PASSWORD = pyjac
+    DBNAME   = potatoORM
+    PORT     = 54320
 
 ## Usage
 
