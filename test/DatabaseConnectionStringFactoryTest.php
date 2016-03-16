@@ -39,6 +39,14 @@ class DatabaseConnectionStringFactoryTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('mysql:host=localhost;dbname=Pyjac', $dsn);
     }
 
+    public function testCreateDatabaseSourceStringReturnsCorrectMYSqlDatabaseSourceStringWithPort()
+    {
+        $this->config['DRIVER'] = 'mysql';
+        $this->config['PORT'] = '3306';
+        $dsn = $this->databaseConnectionStringFactory->createDatabaseSourceString($this->config);
+        $this->assertEquals('mysql:host=localhost;dbname=Pyjac;port=3306', $dsn);
+    }
+
     public function testCreateDatabaseSourceStringReturnsCorrectSQLiteDatabaseSourceString()
     {
         $this->config['DRIVER'] = 'sqlite';

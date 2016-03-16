@@ -1,6 +1,7 @@
 <?php
 
 use \Mockery as m;
+use org\bovigo\vfs\vfsStream;
 use Pyjac\ORM\DatabaseConnection;
 
 class DatabaseConnectionTest extends PHPUnit_Framework_TestCase
@@ -10,14 +11,26 @@ class DatabaseConnectionTest extends PHPUnit_Framework_TestCase
      */
     protected $databaseConnection;
 
+    /**
+     * Instance of DatabaseConnectionStringFactory used in test.
+     */
+    protected $databaseConnectionStringFactory;
+
+     /**
+     * root directory
+     *
+     * @type  vfsStreamDirectory
+     */
+    protected $root;
+
     public function setUp()
     {
-        $databaseConnectionStringFactory =
+        $this->databaseConnectionStringFactory =
                         m::mock('Pyjac\ORM\DatabaseConnectionStringFactoryInterface');
-        $databaseConnectionStringFactory->shouldReceive('createDatabaseSourceString')
+        $this->databaseConnectionStringFactory->shouldReceive('createDatabaseSourceString')
                                              ->with(['DRIVER' => 'sqlite', 'HOSTNAME' => '127.0.0.1', 'USERNAME' => '', 'PASSWORD' => '', 'DBNAME' => 'potatoORM', 'PORT' => '54320'])->once()->andReturn('sqlite::memory:');
 
-        $this->databaseConnection = new DatabaseConnection($databaseConnectionStringFactory);
+        $this->databaseConnection = new DatabaseConnection($this->databaseConnectionStringFactory);
     }
 
     public function testCreateConnectionReturnsDatabaseConnection()
@@ -54,6 +67,22 @@ class DatabaseConnectionTest extends PHPUnit_Framework_TestCase
         $result = $this->invokeMethod($this->databaseConnection, 'tryAgainIfCausedByLostConnection', [$e, 'sqlite::memory:', '', '', []]);
 
         $this->assertInstanceOf('PDO', $result);
+
+        $e = new \Exception('is dead or not enabled');
+        $result = $this->invokeMethod($this->databaseConnection, 'tryAgainIfCausedByLostConnection', [$e, 'sqlite::memory:', '', '', []]);
+        $this->assertInstanceOf('PDO', $result);
+
+        $e = new \Exception('SSL connection has been closed unexpectedly');
+        $result = $this->invokeMethod($this->databaseConnection, 'tryAgainIfCausedByLostConnection', [$e, 'sqlite::memory:', '', '', []]);
+        $this->assertInstanceOf('PDO', $result);
+
+        $e = new \Exception('no connection to the server');
+        $result = $this->invokeMethod($this->databaseConnection, 'tryAgainIfCausedByLostConnection', [$e, 'sqlite::memory:', '', '', []]);
+        $this->assertInstanceOf('PDO', $result);
+
+        $e = new \Exception('decryption failed or bad record mac');
+        $result = $this->invokeMethod($this->databaseConnection, 'tryAgainIfCausedByLostConnection', [$e, 'sqlite::memory:', '', '', []]);
+        $this->assertInstanceOf('PDO', $result);
     }
 
     /**
@@ -64,6 +93,8 @@ class DatabaseConnectionTest extends PHPUnit_Framework_TestCase
         $e = new \Exception('PHP Rocks !!!');
         $result = $this->invokeMethod($this->databaseConnection, 'tryAgainIfCausedByLostConnection', [$e, 'sqlite::memory:', '', '', []]);
     }
+
+
 
     /**
      * Reference: https://jtreminio.com/2013/03/unit-testing-tutorial-part-3-testing-protected-private-methods-coverage-reports-and-crap/
