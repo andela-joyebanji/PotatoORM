@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/andela-joyebanji/PotatoORM.svg?branch=develop)](https://travis-ci.org/andela-joyebanji/PotatoORM) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/andela-joyebanji/PotatoORM/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/andela-joyebanji/PotatoORM/?branch=develop) [![StyleCI](https://styleci.io/repos/53060668/shield)](https://styleci.io/repos/53060668) [![Coverage Status](https://coveralls.io/repos/github/andela-joyebanji/PotatoORM/badge.svg?branch=develop)](https://coveralls.io/github/andela-joyebanji/PotatoORM?branch=develop)
 
 # Potato ORM
-Potato ORM is a very simple agnostic ORM that can perform the basic crud database operations.
+Potato ORM is a very simple agnostic ORM that can perform the basic CRUD database operations. It is an implementation of the Checkpoint 2 requirement for PHP developers at Andela.
 
 ## Installation
 
@@ -18,7 +18,7 @@ Supported database engines
     2. Postgres 
     3. SQLite
     
-You also need set your environment variables to define your database parameters or create a _.env_ file in your project.
+You also need set your environment variables to define your database parameters or create a `.env` file in your project.
 
     DRIVER   = sqlite
     HOSTNAME = 127.0.0.1
@@ -34,13 +34,32 @@ For example:
 
 ```php
 
-<?php
 use Pyjac\ORM\Model;
 
-class User extends Model {
+class User extends Model 
+{
 
 }
 ```  
+
+### Table Names
+
+Note that we did not specify which table to use for our `User` model. The plural name of the class will be unless another name is explicitly specified. So, in this case, PotatoORM will assume the `User` model stores records in the users table. You may specify a custom table by defining a table property on your model:
+
+```php
+
+use Pyjac\ORM\Model;
+
+class User extends Model
+{
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'users';
+}
+``` 
         
 **To create a new instance of the User class, you do:**
 
@@ -86,13 +105,13 @@ $user = User::find(1);
 $user->name = "Nandaa";
 $user->save();
 ```
-`NB: The save() method checks first to see if the id exists. if yes, it calls the upadte method else calls the create method` 
+`NB: The save() method checks first to see if the id exists. if yes, it calls the update method else calls the create method` 
 
 ### Exceptions
 
-	DatabaseDriverNotSupportedException: This exception is thrown when database driver in not supported.
+* `DatabaseDriverNotSupportedException`: This exception is thrown when database driver in not supported.
 	
-	ModelNotFoundException: This exception is thrown when model the find method is trying to get from the database does not exist.
+* `ModelNotFoundException`: This exception is thrown when model the find method is trying to get from the database does not exist.
 
 
 ## Security

@@ -8,6 +8,13 @@ use Pyjac\ORM\Exception\ModelNotFoundException;
 
 abstract class Model implements ModelInterface
 {
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table;
+
     protected $properties = [];
 
     /**
@@ -28,10 +35,11 @@ abstract class Model implements ModelInterface
       */
      public function __construct(DatabaseConnectionInterface $databaseConnection = null)
      {
-         if ($databaseConnection == null) {
-             $this->databaseConnection = DatabaseConnection::getInstance()->databaseConnection;
-         }
-         $this->databaseConnection = $databaseConnection;
+        if ($databaseConnection == null) {
+            $this->databaseConnection = DatabaseConnection::getInstance()->databaseConnection;
+        } else {
+            $this->databaseConnection = $databaseConnection;
+        }
      }
 
     /**
@@ -52,7 +60,9 @@ abstract class Model implements ModelInterface
      */
     public function __get($key)
     {
-        return $this->properties[$key];
+        if(isset($this->properties[$key])){
+            return $this->properties[$key];
+        } 
     }
 
      /**
@@ -80,6 +90,10 @@ abstract class Model implements ModelInterface
      */
     public function getTableName()
     {
+        if(isset($this->table) && !empty($this->table)) {
+
+            return $this->table;
+        }
         $className = explode('\\', get_called_class());
 
         return Inflector::pluralize(strtolower(end($className)));

@@ -91,7 +91,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
 
     public function testCreateObjectInDatabase()
     {
-        $this->model->setProperties(['id' => 2, 'name' => 'pyjac', 'age' => '419']);
+        $this->model->setProperties(['name' => 'pyjac', 'age' => '419']);
         $this->databaseConnection->shouldReceive('prepare')->once()->andReturn($this->sqlStatement);
         $this->sqlStatement->shouldReceive('execute');
         $this->sqlStatement->shouldReceive('rowCount')->once()->andReturn(1);
