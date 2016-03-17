@@ -34,7 +34,6 @@ class ModelTest extends PHPUnit_Framework_TestCase
         $this->sqlStatement = m::mock('\PDOStatement');
 
         $this->model = $this->getMockForAbstractClass('Pyjac\ORM\Model', [$this->databaseConnection]);
-        
     }
 
     public function testGetTableNameReturnsCorrectTableName()
