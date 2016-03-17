@@ -15,13 +15,6 @@ class DatabaseConnectionTest extends PHPUnit_Framework_TestCase
      */
     protected $databaseConnectionStringFactory;
 
-    /**
-     * root directory.
-     *
-     * @var vfsStreamDirectory
-     */
-    protected $root;
-
     public function setUp()
     {
         $this->databaseConnectionStringFactory =
@@ -90,7 +83,7 @@ class DatabaseConnectionTest extends PHPUnit_Framework_TestCase
     public function testTryAgainIfCausedByLostConnectionThrowsExceptionWhenReasonForExceptionIsNotConnectionLoss()
     {
         $e = new \Exception('PHP Rocks !!!');
-        $result = $this->invokeMethod($this->databaseConnection, 'tryAgainIfCausedByLostConnection', [$e, 'sqlite::memory:', '', '', []]);
+        $this->invokeMethod($this->databaseConnection, 'tryAgainIfCausedByLostConnection', [$e, 'sqlite::memory:', '', '', []]);
     }
 
     /**

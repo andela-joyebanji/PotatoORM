@@ -13,7 +13,7 @@ abstract class Model implements ModelInterface
     /**
      * Store instance of database connection used.
      *
-     * @var [type]
+     * @var Pyjac\ORM\DatabaseConnection
      */
     protected $databaseConnection;
 

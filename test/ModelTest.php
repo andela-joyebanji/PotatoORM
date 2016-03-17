@@ -11,8 +11,14 @@ class ModelTest extends PHPUnit_Framework_TestCase
      */
     protected $databaseConnection;
 
+    /**
+     * Instance of Model used in test.
+     */
     protected $model;
 
+    /**
+     * Instance of SqlStatement used in test.
+     */
     protected $sqlStatement;
 
     public function setUp()
@@ -27,9 +33,8 @@ class ModelTest extends PHPUnit_Framework_TestCase
 
         $this->sqlStatement = m::mock('\PDOStatement');
 
-        /*$this->databaseConnection = m::mock('Pyjac\ORM\DatabaseConnection[getInstance,createConnection]',array($databaseConnectionStringFactory));*/
         $this->model = $this->getMockForAbstractClass('Pyjac\ORM\Model', [$this->databaseConnection]);
-        //= new DatabaseConnection($databaseConnectionStringFactory);
+        
     }
 
     public function testGetTableNameReturnsCorrectTableName()

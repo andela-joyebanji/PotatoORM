@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1458127778">
-  <project timestamp="1458127778">
+<coverage generated="1458212378">
+  <project timestamp="1458212378">
     <package name="Pyjac\ORM">
       <file name="/Users/bendozy/Code/Checkpoints/PotatoORM/src/DatabaseConnection.php">
         <class name="DatabaseConnection" namespace="Pyjac\ORM">
