@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1458288523">
-  <project timestamp="1458288523">
+<coverage generated="1458296696">
+  <project timestamp="1458296696">
     <package name="Pyjac\ORM">
       <file name="/Users/bendozy/Code/Checkpoints/PotatoORM/src/DatabaseConnection.php">
         <class name="DatabaseConnection" namespace="Pyjac\ORM">
@@ -95,7 +95,7 @@
       </file>
       <file name="/Users/bendozy/Code/Checkpoints/PotatoORM/src/Model.php">
         <class name="Model" namespace="Pyjac\ORM">
-          <metrics methods="15" coveredmethods="10" conditionals="0" coveredconditionals="0" statements="69" coveredstatements="61" elements="84" coveredelements="71"/>
+          <metrics methods="15" coveredmethods="11" conditionals="0" coveredconditionals="0" statements="69" coveredstatements="62" elements="84" coveredelements="73"/>
         </class>
         <line num="36" type="method" name="__construct" crap="2" count="13"/>
         <line num="38" type="stmt" count="13"/>
@@ -106,10 +106,10 @@
         <line num="51" type="method" name="__set" crap="1" count="1"/>
         <line num="53" type="stmt" count="1"/>
         <line num="54" type="stmt" count="1"/>
-        <line num="61" type="method" name="__get" crap="2.15" count="1"/>
+        <line num="61" type="method" name="__get" crap="2" count="1"/>
         <line num="63" type="stmt" count="1"/>
         <line num="64" type="stmt" count="1"/>
-        <line num="66" type="stmt" count="0"/>
+        <line num="66" type="stmt" count="1"/>
         <line num="73" type="method" name="getProperties" crap="1" count="1"/>
         <line num="75" type="stmt" count="1"/>
         <line num="81" type="method" name="setProperties" crap="1" count="5"/>
@@ -181,7 +181,7 @@
         <line num="249" type="stmt" count="2"/>
         <line num="250" type="stmt" count="2"/>
         <line num="252" type="stmt" count="2"/>
-        <metrics loc="254" ncloc="155" classes="1" methods="15" coveredmethods="10" conditionals="0" coveredconditionals="0" statements="69" coveredstatements="61" elements="84" coveredelements="71"/>
+        <metrics loc="254" ncloc="155" classes="1" methods="15" coveredmethods="11" conditionals="0" coveredconditionals="0" statements="69" coveredstatements="62" elements="84" coveredelements="73"/>
       </file>
     </package>
     <file name="/Users/bendozy/Code/Checkpoints/PotatoORM/src/DatabaseConnectionInterface.php">
@@ -214,6 +214,6 @@
     <file name="/Users/bendozy/Code/Checkpoints/PotatoORM/src/ModelInterface.php">
       <metrics loc="23" ncloc="12" classes="0" methods="0" coveredmethods="0" conditionals="0" coveredconditionals="0" statements="0" coveredstatements="0" elements="0" coveredelements="0"/>
     </file>
-    <metrics files="9" loc="580" ncloc="354" classes="6" methods="27" coveredmethods="20" conditionals="0" coveredconditionals="0" statements="137" coveredstatements="123" elements="164" coveredelements="143"/>
+    <metrics files="9" loc="580" ncloc="354" classes="6" methods="27" coveredmethods="21" conditionals="0" coveredconditionals="0" statements="137" coveredstatements="124" elements="164" coveredelements="145"/>
   </project>
 </coverage>

@@ -155,7 +155,7 @@ abstract class Model implements ModelInterface
         $sqlStatement = $this->databaseConnection->prepare($sql);
         $sqlStatement->execute();
 
-        return $sqlStatement->fetchAll(PDO::FETCH_CLASS);
+        return $sqlStatement->fetchAll(PDO::FETCH_CLASS, get_called_class());
     }
 
     /**

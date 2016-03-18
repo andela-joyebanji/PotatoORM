@@ -149,6 +149,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($this->model->name, 'Pyjac');
         $this->assertEquals($this->model->id, '10');
         $this->assertEquals($this->model->age, '60');
+        $this->assertEquals($this->model->jac, null);
     }
 
     public function testCreateModelWithNoParameter()
