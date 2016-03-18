@@ -12,8 +12,7 @@ class User extends Model
 $user = User::find(13);
 echo "BEFORE\n";
 var_dump($user);
-$user->name = "Uncle Pyjac";
+$user->name = 'Uncle Pyjac';
 $user->save();
 echo "AFTER\n";
 var_dump(User::find(13));
-
