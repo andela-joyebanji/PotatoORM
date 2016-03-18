@@ -117,7 +117,7 @@ abstract class Model implements ModelInterface
      *
      * @param int $id
      *
-     * @return object
+     * @return object|null
      */
     public function get($id)
     {
@@ -126,7 +126,7 @@ abstract class Model implements ModelInterface
         $sqlStatement->setFetchMode(PDO::FETCH_CLASS, get_called_class());
         $sqlStatement->execute();
         if ($sqlStatement->rowCount() < 1) {
-            throw new ModelNotFoundException($id);
+            return null;
         }
 
         return $sqlStatement->fetch();

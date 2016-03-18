@@ -57,17 +57,15 @@ class ModelTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf('stdClass', $this->model->get(1));
     }
 
-    /**
-     * @expectedException Pyjac\ORM\Exception\ModelNotFoundException
-     */
-    public function testGetThrowsModelNotFoundExceptionWhenIdNotFoundInDatabase()
+    
+    public function testGetReturnNullWhenIdNotFoundInDatabase()
     {
         $this->databaseConnection->shouldReceive('prepare')->once()->andReturn($this->sqlStatement);
         $this->sqlStatement->shouldReceive('setFetchMode');
         $this->sqlStatement->shouldReceive('execute');
         $this->sqlStatement->shouldReceive('rowCount')->once()->andReturn(0);
 
-        $this->assertInstanceOf('stdClass', $this->model->get(1));
+        $this->assertEquals(null, $this->model->get(1));
     }
 
     public function testAllReturnsAnArrayOfObjectsWhenValuesAreInDatabase()
