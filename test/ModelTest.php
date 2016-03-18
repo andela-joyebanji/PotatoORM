@@ -57,7 +57,6 @@ class ModelTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf('stdClass', $this->model->get(1));
     }
 
-    
     public function testGetReturnNullWhenIdNotFoundInDatabase()
     {
         $this->databaseConnection->shouldReceive('prepare')->once()->andReturn($this->sqlStatement);
