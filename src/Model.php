@@ -4,7 +4,6 @@ namespace Pyjac\ORM;
 
 use Doctrine\Common\Inflector\Inflector;
 use PDO;
-use Pyjac\ORM\Exception\ModelNotFoundException;
 
 abstract class Model implements ModelInterface
 {
@@ -126,7 +125,7 @@ abstract class Model implements ModelInterface
         $sqlStatement->setFetchMode(PDO::FETCH_CLASS, get_called_class());
         $sqlStatement->execute();
         if ($sqlStatement->rowCount() < 1) {
-            return null;
+            return;
         }
 
         return $sqlStatement->fetch();
